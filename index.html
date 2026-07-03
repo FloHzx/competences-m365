@@ -1,0 +1,923 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dossier de compétences M365</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tabler-icons/2.44.0/iconfont/tabler-icons.min.css">
+<style>
+  :root{
+    --bg: #0f1720;
+    --panel: #161f2b;
+    --panel-2: #1c2733;
+    --line: #2a3644;
+    --line-soft: #212b37;
+    --text: #e7ecf2;
+    --text-dim: #93a1b0;
+    --text-faint: #5c6b7a;
+    --cyan: #4fd1c5;
+    --amber: #e0a458;
+    --violet: #a389e8;
+    --rose: #e08497;
+    --danger: #e0687a;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    background: var(--bg);
+    color: var(--text);
+    font-family:'Inter',sans-serif;
+    padding: 40px 24px 80px;
+  }
+  .wrap{max-width:1080px;margin:0 auto;}
+  .bg-grid{
+    position:fixed;inset:0;z-index:-1;
+    background-image:
+      linear-gradient(var(--line-soft) 1px, transparent 1px),
+      linear-gradient(90deg, var(--line-soft) 1px, transparent 1px);
+    background-size: 32px 32px;
+    opacity:0.35;
+    mask-image: radial-gradient(ellipse at top, black, transparent 75%);
+  }
+
+  /* ===== HERO ===== */
+  .hero{
+    display:grid;
+    grid-template-columns: 1fr 200px;
+    gap:32px;
+    align-items:center;
+    margin-bottom: 30px;
+    padding-bottom: 28px;
+    border-bottom: 1px solid var(--line);
+  }
+  .eyebrow{
+    font-family:'JetBrains Mono',monospace;
+    font-size:12px;
+    color: var(--cyan);
+    letter-spacing:0.08em;
+    margin:0 0 10px;
+  }
+  h1{
+    font-family:'JetBrains Mono',monospace;
+    font-size: 27px;
+    font-weight:700;
+    margin:0 0 12px;
+    letter-spacing:-0.01em;
+  }
+  .meta-fields{
+    display:flex;
+    flex-wrap:wrap;
+    gap:8px 22px;
+    margin-bottom:16px;
+  }
+  .meta-field{
+    font-family:'JetBrains Mono',monospace;
+    font-size:12.5px;
+    color: var(--text-dim);
+    display:flex;
+    align-items:baseline;
+    gap:6px;
+  }
+  .meta-field span.lbl{color:var(--text-faint);}
+  .meta-field [contenteditable]{
+    border-bottom:1px dashed var(--line);
+    padding:0 2px 1px;
+    color:var(--text);
+    min-width: 60px;
+  }
+  .meta-field [contenteditable]:focus{outline:none;border-color:var(--cyan);background:var(--panel-2);}
+  .sub{
+    color: var(--text-dim);
+    font-size:14px;
+    margin:0;
+    max-width:560px;
+    line-height:1.6;
+  }
+  .toolbar{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-top:18px;}
+  .stat{
+    font-family:'JetBrains Mono',monospace;
+    font-size:12px;
+    color:var(--text-faint);
+    padding:6px 10px;
+    border:1px solid var(--line);
+    border-radius:4px;
+  }
+  .stat b{color:var(--text-dim);font-weight:600;}
+  button{
+    font-family:'Inter',sans-serif;
+    cursor:pointer;
+  }
+  .btn{
+    background: transparent;
+    border:1px solid var(--line);
+    color: var(--text-dim);
+    padding:7px 14px;
+    border-radius:4px;
+    font-size:13px;
+    display:inline-flex;
+    align-items:center;
+    gap:6px;
+    transition: border-color 0.15s, color 0.15s;
+  }
+  .btn:hover{border-color:var(--cyan);color:var(--text);}
+  .btn-primary{
+    border-color: var(--cyan);
+    color: var(--cyan);
+  }
+  .btn-primary:hover{background: rgba(79,209,197,0.08);}
+  .btn.active{background: rgba(79,209,197,0.12);border-color:var(--cyan);color:var(--cyan);}
+
+  /* ===== GAUGE (signature element) ===== */
+  .gauge-box{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    gap:4px;
+  }
+  .gauge-box svg{display:block;}
+  .gauge-pct{
+    font-family:'JetBrains Mono',monospace;
+    font-size:26px;
+    font-weight:700;
+    fill: var(--text);
+  }
+  .gauge-label{
+    font-family:'JetBrains Mono',monospace;
+    font-size:10.5px;
+    color: var(--text-faint);
+    letter-spacing:0.05em;
+    text-align:center;
+  }
+
+  .overview{
+    margin: 4px 0 28px;
+    padding:16px 18px;
+    background: var(--panel);
+    border:1px solid var(--line);
+    border-radius:8px;
+  }
+  .overview-title{
+    font-family:'JetBrains Mono',monospace;
+    font-size:11px;
+    color: var(--text-faint);
+    letter-spacing:0.06em;
+    margin:0 0 14px;
+  }
+  .ov-row{
+    display:flex;align-items:center;gap:12px;
+    margin-bottom:10px;
+  }
+  .ov-row:last-child{margin-bottom:0;}
+  .ov-icon{
+    width:26px;height:26px;flex-shrink:0;border-radius:6px;
+    display:flex;align-items:center;justify-content:center;font-size:14px;
+  }
+  .ov-label{
+    font-family:'JetBrains Mono',monospace;
+    font-size:12.5px;
+    color: var(--text-dim);
+    width:150px;
+    flex-shrink:0;
+  }
+  .ov-bar-track{
+    flex:1;
+    height:8px;
+    background: var(--panel-2);
+    border-radius:4px;
+    overflow:hidden;
+  }
+  .ov-bar-fill{
+    height:100%;
+    border-radius:4px;
+    transition: width 0.4s ease;
+  }
+  .ov-value{
+    font-family:'JetBrains Mono',monospace;
+    font-size:12px;
+    color: var(--text-faint);
+    width:74px;
+    text-align:right;
+    flex-shrink:0;
+  }
+
+  .grid{
+    display:grid;
+    grid-template-columns: repeat(auto-fill, minmax(310px, 1fr));
+    gap:18px;
+  }
+  .card{
+    background: var(--panel);
+    border:1px solid var(--line);
+    border-radius:8px;
+    overflow:hidden;
+    display:flex;
+    flex-direction:column;
+  }
+  .card-head{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:14px 16px;
+    border-bottom:1px solid var(--line);
+    gap:8px;
+  }
+  .card-title-row{display:flex;align-items:center;gap:10px;min-width:0;}
+  .cat-icon{
+    width:30px;height:30px;flex-shrink:0;
+    border-radius:6px;
+    display:flex;align-items:center;justify-content:center;
+    font-size:16px;
+  }
+  .cat-title{
+    font-family:'JetBrains Mono',monospace;
+    font-size:15px;
+    font-weight:600;
+    background:transparent;
+    border:none;
+    color:var(--text);
+    padding:2px 4px;
+    border-radius:3px;
+    max-width:220px;
+  }
+  .cat-title:focus{outline:1px solid var(--line);background:var(--panel-2);}
+  .count{
+    font-family:'JetBrains Mono',monospace;
+    font-size:11px;
+    color: var(--text-faint);
+    white-space:nowrap;
+  }
+  .icon-btn{
+    background:transparent;border:none;color:var(--text-faint);
+    font-size:15px;line-height:1;padding:4px 6px;border-radius:3px;
+  }
+  .icon-btn:hover{color:var(--danger);background:rgba(224,104,122,0.08);}
+  .body{padding:12px 16px 16px;flex:1;}
+  ul.tree{list-style:none;margin:0;padding:0;}
+  .node{
+    font-family:'JetBrains Mono',monospace;
+    font-size:12.5px;
+    color: var(--text-faint);
+    user-select:none;
+  }
+  .row{
+    display:flex;
+    align-items:flex-start;
+    gap:8px;
+    padding:6px 2px;
+    border-radius:4px;
+  }
+  .row:hover{background: var(--panel-2);}
+  .row:hover .icon-btn{opacity:1;}
+  .row .icon-btn{opacity:0;transition:opacity 0.1s;flex-shrink:0;}
+  .row-text{
+    font-family:'Inter',sans-serif;
+    font-size:13.5px;
+    color: var(--text);
+    line-height:1.5;
+    flex:1;
+    padding-top:1px;
+    word-break: break-word;
+  }
+  .row-text[contenteditable]:focus{outline:1px solid var(--line);border-radius:3px;background:var(--panel-2);}
+  .subs{list-style:none;margin:2px 0 2px 0;padding:0;}
+  .add-sub-btn{
+    font-family:'JetBrains Mono',monospace;
+    font-size:11px;
+    color: var(--text-faint);
+    background:none;border:none;padding:3px 2px 3px 24px;
+    opacity:0;
+  }
+  .item-block:hover .add-sub-btn{opacity:0.7;}
+  .add-sub-btn:hover{color:var(--cyan);opacity:1 !important;}
+  .add-item-form{
+    display:flex;gap:6px;margin-top:8px;
+  }
+  .add-item-form input{
+    flex:1;
+    background: var(--panel-2);
+    border:1px solid var(--line);
+    color:var(--text);
+    font-size:13px;
+    padding:7px 9px;
+    border-radius:4px;
+    font-family:'Inter',sans-serif;
+  }
+  .add-item-form input:focus{outline:none;border-color:var(--cyan);}
+  .add-item-form button{
+    background:none;border:1px solid var(--line);color:var(--text-dim);
+    border-radius:4px;padding:0 12px;font-size:13px;
+  }
+  .add-item-form button:hover{border-color:var(--cyan);color:var(--cyan);}
+  .new-cat-card{
+    border:1px dashed var(--line);
+    border-radius:8px;
+    display:flex;align-items:center;justify-content:center;
+    min-height:120px;
+    background:transparent;
+    color:var(--text-faint);
+    font-family:'JetBrains Mono',monospace;
+    font-size:13px;
+    gap:8px;
+  }
+  .new-cat-card:hover{border-color:var(--cyan);color:var(--cyan);}
+  .empty{
+    color:var(--text-faint);
+    font-size:12.5px;
+    font-family:'JetBrains Mono',monospace;
+    padding:6px 2px;
+  }
+  .footnote{
+    margin-top:28px;
+    font-family:'JetBrains Mono',monospace;
+    font-size:11px;
+    color:var(--text-faint);
+    display:flex;
+    align-items:center;
+    gap:8px;
+  }
+  .dot{width:6px;height:6px;border-radius:50%;background:var(--cyan);flex-shrink:0;}
+  .sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;}
+
+  /* ===== LEVEL DOTS ===== */
+  .level-dots{
+    display:flex;
+    gap:4px;
+    align-items:center;
+    flex-shrink:0;
+    padding-top:3px;
+    margin-right:2px;
+  }
+  .level-dot{
+    width:8px;height:8px;
+    border-radius:50%;
+    border:1.5px solid var(--text-faint);
+    background:transparent;
+    padding:0;
+    cursor:pointer;
+    transition: transform 0.1s, background 0.15s, border-color 0.15s;
+  }
+  .level-dot:hover{transform:scale(1.25);}
+  .level-dot.filled{background:currentColor;border-color:currentColor;}
+  .level-tag{
+    font-family:'JetBrains Mono',monospace;
+    font-size:10px;
+    color: var(--text-faint);
+    padding-top:3px;
+    width:64px;
+    flex-shrink:0;
+  }
+
+  /* ===== PRESENTATION MODE ===== */
+  body.presentation .add-item-form,
+  body.presentation .add-sub-btn,
+  body.presentation .new-cat-card,
+  body.presentation .icon-btn,
+  body.presentation #addCatBtn,
+  body.presentation .toolbar .stat#saveStatus{
+    display:none !important;
+  }
+  body.presentation .row-text,
+  body.presentation .cat-title,
+  body.presentation .meta-field [contenteditable]{
+    pointer-events:none;
+  }
+  body.presentation .level-dot{cursor:default;pointer-events:none;}
+  body.presentation .row:hover{background:transparent;}
+
+  /* ===== PRINT ===== */
+  @media print{
+    body{background:#fff !important;color:#1a2129 !important;padding:0 !important;}
+    .bg-grid{display:none;}
+    .toolbar, .icon-btn, .add-item-form, .add-sub-btn, .new-cat-card, #addCatBtn{display:none !important;}
+    .card{break-inside:avoid;border-color:#d7dde3 !important;background:#fff !important;}
+    .overview{border-color:#d7dde3 !important;background:#fff !important;}
+    .grid{grid-template-columns:repeat(2,1fr) !important;}
+    h1, .cat-title, .row-text, .gauge-pct{color:#1a2129 !important;}
+    .sub, .meta-field, .ov-label, .level-tag, .eyebrow, .gauge-label{color:#5c6b7a !important;}
+    .ov-bar-track{background:#eef1f4 !important;}
+    .card-head{border-color:#e4e8ec !important;}
+  }
+</style>
+</head>
+<body>
+<div class="bg-grid"></div>
+<div class="wrap">
+  <h2 class="sr-only">Dossier de compétences M365 — tableau visuel présentant les compétences acquises par domaine (M365, SharePoint/OneDrive, Exchange, Entra ID), avec niveau de maîtrise et statistiques globales, destiné à être présenté à un employeur.</h2>
+
+  <div class="hero">
+    <div>
+      <p class="eyebrow">~/competences/m365</p>
+      <h1>Dossier de compétences M365</h1>
+      <div class="meta-fields">
+        <span class="meta-field"><span class="lbl">Nom :</span><span contenteditable="true" id="metaName">—</span></span>
+        <span class="meta-field"><span class="lbl">Fonction :</span><span contenteditable="true" id="metaRole">—</span></span>
+        <span class="meta-field"><span class="lbl">Mise à jour :</span><span id="metaDate">—</span></span>
+      </div>
+      <p class="sub">Suivi des compétences acquises en administration M365, organisées par domaine. Chaque point dispose d'un niveau de maîtrise (cliquer sur les points pour l'ajuster).</p>
+      <div class="toolbar">
+        <button class="btn btn-primary" id="addCatBtn">+ nouvelle catégorie</button>
+        <button class="btn" id="presentBtn"><i class="ti ti-presentation" aria-hidden="true"></i> mode présentation</button>
+        <button class="btn" id="printBtn"><i class="ti ti-printer" aria-hidden="true"></i> exporter en PDF</button>
+        <button class="btn" id="exportBtn"><i class="ti ti-download" aria-hidden="true"></i> exporter (JSON)</button>
+        <button class="btn" id="importBtn"><i class="ti ti-upload" aria-hidden="true"></i> importer (JSON)</button>
+        <input type="file" id="importFile" accept="application/json" style="display:none;">
+        <span class="stat" id="statCount"><b>—</b> compétences</span>
+        <span class="stat" id="saveStatus">chargement…</span>
+      </div>
+    </div>
+    <div class="gauge-box" id="gaugeBox"></div>
+  </div>
+
+  <div class="overview" id="overview">
+    <p class="overview-title">RÉPARTITION PAR DOMAINE</p>
+    <div id="overviewRows"></div>
+  </div>
+
+  <div class="grid" id="grid"></div>
+
+  <div class="footnote"><span class="dot"></span> données personnelles, enregistrées pour toi uniquement</div>
+</div>
+
+<script>
+const STORAGE_KEY = 'm365-skills-board';
+const COLORS = ['cyan','amber','violet','rose'];
+const COLOR_HEX = {cyan:'#4fd1c5', amber:'#e0a458', violet:'#a389e8', rose:'#e08497'};
+const LEVEL_LABELS = {1:'Notion', 2:'En pratique', 3:'Autonome'};
+
+function uid(){ return Math.random().toString(36).slice(2,9); }
+function todayStr(){
+  return new Date().toLocaleDateString('fr-CH', {year:'numeric', month:'2-digit', day:'2-digit'});
+}
+
+const DEFAULT_DATA = {
+  meta: { name: '', role: '' },
+  categories: [
+    {
+      id: uid(), name: 'M365', color: 'cyan', icon: 'ti-apps',
+      items: [
+        { id: uid(), text: 'Création utilisateur M365 + boîte mail', level: 3, subs: [] },
+        { id: uid(), text: 'Offboarding', level: 3, subs: [
+            { id: uid(), text: 'Conversion de la boîte mail en shared mailbox' },
+            { id: uid(), text: 'Redirection des mails (si nécessaire)' },
+            { id: uid(), text: 'Désactivation de la licence' },
+            { id: uid(), text: 'Blocage des connexions' }
+          ]
+        },
+        { id: uid(), text: 'Gestion des licences et attribution selon le besoin', level: 3, subs: [] }
+      ]
+    },
+    {
+      id: uid(), name: 'SharePoint - OneDrive', color: 'amber', icon: 'ti-cloud',
+      items: [
+        { id: uid(), text: 'Débug, problèmes de synchro', level: 3, subs: [] },
+        { id: uid(), text: 'Resynchronisation complète (Windows, Mac)', level: 3, subs: [] },
+        { id: uid(), text: 'Ajout de membres internes et externes', level: 3, subs: [] },
+        { id: uid(), text: 'Documentation OneDrive et SharePoint', level: 2, subs: [] }
+      ]
+    },
+    {
+      id: uid(), name: 'Exchange', color: 'violet', icon: 'ti-mail',
+      items: [
+        { id: uid(), text: 'Conversion Shared mailbox → User mailbox', level: 3, subs: [] }
+      ]
+    },
+    {
+      id: uid(), name: 'Entra ID', color: 'rose', icon: 'ti-shield-lock',
+      items: [
+        { id: uid(), text: 'Reset mot de passe, blocage des sessions', level: 3, subs: [] },
+        { id: uid(), text: 'Accès conditionnel (MFA)', level: 2, subs: [] },
+        { id: uid(), text: 'Reset appareils MFA', level: 3, subs: [] }
+      ]
+    }
+  ]
+};
+
+let data = null;
+let presentationMode = false;
+const grid = document.getElementById('grid');
+const statCount = document.getElementById('statCount');
+const saveStatus = document.getElementById('saveStatus');
+
+async function load(){
+  try{
+    const raw = localStorage.getItem(STORAGE_KEY);
+    data = raw ? JSON.parse(raw) : structuredClone(DEFAULT_DATA);
+  }catch(e){
+    data = structuredClone(DEFAULT_DATA);
+  }
+  if(!data.meta) data.meta = { name:'', role:'' };
+  data.categories.forEach(c => c.items.forEach(i => { if(!i.level) i.level = 2; }));
+  saveStatus.textContent = 'à jour';
+  render();
+  save(true);
+}
+
+let saveTimer = null;
+function save(silent){
+  if(!silent){ saveStatus.textContent = 'sauvegarde…'; }
+  clearTimeout(saveTimer);
+  saveTimer = setTimeout(() => {
+    try{
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+      saveStatus.textContent = 'à jour (dans ce navigateur)';
+    }catch(e){
+      saveStatus.textContent = 'erreur de sauvegarde';
+    }
+  }, silent ? 0 : 250);
+}
+
+function countAll(){
+  let n = 0;
+  data.categories.forEach(c => c.items.forEach(i => { n += 1; n += (i.subs ? i.subs.length : 0); }));
+  return n;
+}
+
+function overallScore(){
+  let total = 0, count = 0;
+  data.categories.forEach(c => c.items.forEach(i => { total += (i.level || 2); count += 1; }));
+  if(count === 0) return 0;
+  return Math.round((total / (count * 3)) * 100);
+}
+
+function renderGauge(){
+  const box = document.getElementById('gaugeBox');
+  const pct = overallScore();
+  const r = 52, c = 2 * Math.PI * r;
+  const offset = c * (1 - pct / 100);
+  box.innerHTML = `
+    <svg width="140" height="140" viewBox="0 0 140 140">
+      <circle cx="70" cy="70" r="${r}" fill="none" stroke="var(--panel-2)" stroke-width="10"/>
+      <circle cx="70" cy="70" r="${r}" fill="none" stroke="var(--cyan)" stroke-width="10"
+        stroke-linecap="round" stroke-dasharray="${c}" stroke-dashoffset="${offset}"
+        transform="rotate(-90 70 70)" style="transition: stroke-dashoffset 0.6s ease;"/>
+      <text x="70" y="76" text-anchor="middle" class="gauge-pct">${pct}%</text>
+    </svg>
+    <span class="gauge-label">NIVEAU GLOBAL<br>DE MAÎTRISE</span>
+  `;
+}
+
+function renderOverview(){
+  const box = document.getElementById('overview');
+  const rows = document.getElementById('overviewRows');
+  rows.innerHTML = '';
+  if(data.categories.length === 0){ box.style.display = 'none'; return; }
+  box.style.display = 'block';
+  const counts = data.categories.map(c => c.items.reduce((n,i) => n + 1 + (i.subs ? i.subs.length : 0), 0));
+  const max = Math.max(1, ...counts);
+  data.categories.forEach((cat, idx) => {
+    const n = counts[idx];
+    const mastered = cat.items.filter(i => (i.level||2) === 3).length;
+    const row = document.createElement('div');
+    row.className = 'ov-row';
+
+    const icon = document.createElement('span');
+    icon.className = 'ov-icon';
+    icon.style.background = COLOR_HEX[cat.color] + '22';
+    icon.style.color = COLOR_HEX[cat.color];
+    icon.innerHTML = '<i class="ti ' + (cat.icon || 'ti-folder') + '" aria-hidden="true"></i>';
+
+    const label = document.createElement('span');
+    label.className = 'ov-label';
+    label.textContent = cat.name;
+
+    const track = document.createElement('div');
+    track.className = 'ov-bar-track';
+    const fill = document.createElement('div');
+    fill.className = 'ov-bar-fill';
+    fill.style.width = Math.round((n / max) * 100) + '%';
+    fill.style.background = COLOR_HEX[cat.color];
+    track.appendChild(fill);
+
+    const value = document.createElement('span');
+    value.className = 'ov-value';
+    value.textContent = n + ' pts · ' + mastered + ' autonome' + (mastered===1?'':'s');
+
+    row.appendChild(icon);
+    row.appendChild(label);
+    row.appendChild(track);
+    row.appendChild(value);
+    rows.appendChild(row);
+  });
+}
+
+function render(){
+  grid.innerHTML = '';
+  data.categories.forEach(cat => grid.appendChild(renderCategory(cat)));
+  renderOverview();
+  renderGauge();
+
+  const addCard = document.createElement('button');
+  addCard.className = 'new-cat-card';
+  addCard.innerHTML = '<i class="ti" aria-hidden="true">+</i> ajouter une catégorie';
+  addCard.onclick = () => {
+    const name = prompt('Nom de la nouvelle catégorie :');
+    if(!name || !name.trim()) return;
+    const usedColors = data.categories.map(c => c.color);
+    const color = COLORS.find(c => !usedColors.includes(c)) || COLORS[data.categories.length % COLORS.length];
+    data.categories.push({ id: uid(), name: name.trim(), color, icon: 'ti-folder', items: [] });
+    save(); render();
+  };
+  grid.appendChild(addCard);
+
+  statCount.innerHTML = '<b>' + countAll() + '</b> compétences';
+
+  document.getElementById('metaName').textContent = data.meta.name || 'Cliquer pour éditer';
+  document.getElementById('metaRole').textContent = data.meta.role || 'Cliquer pour éditer';
+  document.getElementById('metaDate').textContent = todayStr();
+}
+
+function renderCategory(cat){
+  const card = document.createElement('div');
+  card.className = 'card';
+  card.style.borderTop = '2px solid ' + COLOR_HEX[cat.color];
+
+  const head = document.createElement('div');
+  head.className = 'card-head';
+
+  const titleRow = document.createElement('div');
+  titleRow.className = 'card-title-row';
+
+  const iconBadge = document.createElement('span');
+  iconBadge.className = 'cat-icon';
+  iconBadge.style.background = COLOR_HEX[cat.color] + '22';
+  iconBadge.style.color = COLOR_HEX[cat.color];
+  iconBadge.innerHTML = '<i class="ti ' + (cat.icon || 'ti-folder') + '" aria-hidden="true"></i>';
+  titleRow.appendChild(iconBadge);
+
+  const title = document.createElement('input');
+  title.className = 'cat-title';
+  title.value = cat.name;
+  title.style.color = COLOR_HEX[cat.color];
+  title.addEventListener('change', () => { cat.name = title.value.trim() || cat.name; save(); });
+
+  titleRow.appendChild(title);
+
+  const right = document.createElement('div');
+  right.style.display = 'flex';
+  right.style.alignItems = 'center';
+  right.style.gap = '10px';
+
+  const count = document.createElement('span');
+  count.className = 'count';
+  count.textContent = cat.items.length + ' pts';
+
+  const delCat = document.createElement('button');
+  delCat.className = 'icon-btn';
+  delCat.innerHTML = '&times;';
+  delCat.title = 'Supprimer la catégorie';
+  delCat.style.opacity = '0.6';
+  delCat.onclick = () => {
+    if(confirm('Supprimer la catégorie "' + cat.name + '" et tout son contenu ?')){
+      data.categories = data.categories.filter(c => c.id !== cat.id);
+      save(); render();
+    }
+  };
+
+  right.appendChild(count);
+  right.appendChild(delCat);
+  head.appendChild(titleRow);
+  head.appendChild(right);
+  card.appendChild(head);
+
+  const body = document.createElement('div');
+  body.className = 'body';
+
+  if(cat.items.length === 0){
+    const empty = document.createElement('div');
+    empty.className = 'empty';
+    empty.textContent = '// aucune compétence pour le moment';
+    body.appendChild(empty);
+  }
+
+  const list = document.createElement('ul');
+  list.className = 'tree';
+  cat.items.forEach((item, idx) => {
+    list.appendChild(renderItem(cat, item, idx === cat.items.length - 1));
+  });
+  body.appendChild(list);
+
+  const form = document.createElement('div');
+  form.className = 'add-item-form';
+  const input = document.createElement('input');
+  input.placeholder = 'nouvelle compétence…';
+  const btn = document.createElement('button');
+  btn.textContent = '+';
+  const addFn = () => {
+    const v = input.value.trim();
+    if(!v) return;
+    cat.items.push({ id: uid(), text: v, level: 1, subs: [] });
+    input.value = '';
+    save(); render();
+  };
+  btn.onclick = addFn;
+  input.addEventListener('keydown', e => { if(e.key === 'Enter') addFn(); });
+  form.appendChild(input);
+  form.appendChild(btn);
+  body.appendChild(form);
+
+  card.appendChild(body);
+  return card;
+}
+
+function renderLevelDots(cat, item){
+  const wrap = document.createElement('span');
+  wrap.className = 'level-dots';
+  wrap.title = LEVEL_LABELS[item.level || 2];
+  for(let lvl = 1; lvl <= 3; lvl++){
+    const dot = document.createElement('button');
+    dot.className = 'level-dot' + ((item.level||2) >= lvl ? ' filled' : '');
+    dot.style.color = COLOR_HEX[cat.color];
+    dot.setAttribute('aria-label', 'Niveau ' + lvl + ' — ' + LEVEL_LABELS[lvl]);
+    dot.onclick = (e) => {
+      e.stopPropagation();
+      item.level = lvl;
+      save(); render();
+    };
+    wrap.appendChild(dot);
+  }
+  return wrap;
+}
+
+function renderItem(cat, item, isLast){
+  const li = document.createElement('li');
+  li.className = 'item-block';
+
+  const row = document.createElement('div');
+  row.className = 'row';
+
+  const node = document.createElement('span');
+  node.className = 'node';
+  node.textContent = isLast ? '└─' : '├─';
+
+  const text = document.createElement('span');
+  text.className = 'row-text';
+  text.contentEditable = 'true';
+  text.textContent = item.text;
+  text.addEventListener('blur', () => {
+    const v = text.textContent.trim();
+    item.text = v || item.text;
+    text.textContent = item.text;
+    save();
+  });
+  text.addEventListener('keydown', e => { if(e.key === 'Enter'){ e.preventDefault(); text.blur(); } });
+
+  const levelTag = document.createElement('span');
+  levelTag.className = 'level-tag';
+  levelTag.textContent = LEVEL_LABELS[item.level || 2];
+  levelTag.style.color = COLOR_HEX[cat.color];
+
+  const delBtn = document.createElement('button');
+  delBtn.className = 'icon-btn';
+  delBtn.innerHTML = '&times;';
+  delBtn.title = 'Supprimer';
+  delBtn.onclick = () => {
+    cat.items = cat.items.filter(i => i.id !== item.id);
+    save(); render();
+  };
+
+  row.appendChild(node);
+  row.appendChild(text);
+  row.appendChild(levelTag);
+  row.appendChild(renderLevelDots(cat, item));
+  row.appendChild(delBtn);
+  li.appendChild(row);
+
+  if(item.subs && item.subs.length){
+    const subUl = document.createElement('ul');
+    subUl.className = 'subs';
+    item.subs.forEach((sub, sidx) => {
+      subUl.appendChild(renderSub(cat, item, sub, sidx === item.subs.length - 1, isLast));
+    });
+    li.appendChild(subUl);
+  }
+
+  const addSub = document.createElement('button');
+  addSub.className = 'add-sub-btn';
+  addSub.textContent = '+ sous-point';
+  addSub.onclick = () => {
+    const v = prompt('Sous-point pour "' + item.text + '" :');
+    if(!v || !v.trim()) return;
+    if(!item.subs) item.subs = [];
+    item.subs.push({ id: uid(), text: v.trim() });
+    save(); render();
+  };
+  li.appendChild(addSub);
+
+  return li;
+}
+
+function renderSub(cat, item, sub, isLast, parentIsLast){
+  const li = document.createElement('li');
+  const row = document.createElement('div');
+  row.className = 'row';
+  row.style.paddingLeft = '14px';
+
+  const node = document.createElement('span');
+  node.className = 'node';
+  node.textContent = (parentIsLast ? '   ' : '│  ') + (isLast ? '└─' : '├─');
+
+  const text = document.createElement('span');
+  text.className = 'row-text';
+  text.contentEditable = 'true';
+  text.textContent = sub.text;
+  text.style.color = 'var(--text-dim)';
+  text.style.fontSize = '13px';
+  text.addEventListener('blur', () => {
+    const v = text.textContent.trim();
+    sub.text = v || sub.text;
+    text.textContent = sub.text;
+    save();
+  });
+  text.addEventListener('keydown', e => { if(e.key === 'Enter'){ e.preventDefault(); text.blur(); } });
+
+  const delBtn = document.createElement('button');
+  delBtn.className = 'icon-btn';
+  delBtn.innerHTML = '&times;';
+  delBtn.title = 'Supprimer';
+  delBtn.onclick = () => {
+    item.subs = item.subs.filter(s => s.id !== sub.id);
+    save(); render();
+  };
+
+  row.appendChild(node);
+  row.appendChild(text);
+  row.appendChild(delBtn);
+  li.appendChild(row);
+  return li;
+}
+
+document.getElementById('addCatBtn').onclick = () => {
+  const name = prompt('Nom de la nouvelle catégorie :');
+  if(!name || !name.trim()) return;
+  const usedColors = data.categories.map(c => c.color);
+  const color = COLORS.find(c => !usedColors.includes(c)) || COLORS[data.categories.length % COLORS.length];
+  data.categories.push({ id: uid(), name: name.trim(), color, icon: 'ti-folder', items: [] });
+  save(); render();
+};
+
+document.getElementById('presentBtn').addEventListener('click', (e) => {
+  presentationMode = !presentationMode;
+  document.body.classList.toggle('presentation', presentationMode);
+  e.currentTarget.classList.toggle('active', presentationMode);
+  e.currentTarget.innerHTML = presentationMode
+    ? '<i class="ti ti-edit" aria-hidden="true"></i> mode édition'
+    : '<i class="ti ti-presentation" aria-hidden="true"></i> mode présentation';
+});
+
+document.getElementById('printBtn').addEventListener('click', () => window.print());
+
+document.getElementById('exportBtn').addEventListener('click', () => {
+  const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = 'competences-m365-' + new Date().toISOString().slice(0,10) + '.json';
+  a.click();
+  URL.revokeObjectURL(url);
+});
+
+document.getElementById('importBtn').addEventListener('click', () => {
+  document.getElementById('importFile').click();
+});
+document.getElementById('importFile').addEventListener('change', (e) => {
+  const file = e.target.files[0];
+  if(!file) return;
+  const reader = new FileReader();
+  reader.onload = () => {
+    try{
+      const imported = JSON.parse(reader.result);
+      if(!imported.categories) throw new Error('format invalide');
+      data = imported;
+      if(!data.meta) data.meta = { name:'', role:'' };
+      data.categories.forEach(c => c.items.forEach(i => { if(!i.level) i.level = 2; }));
+      save(); render();
+    }catch(err){
+      alert('Fichier JSON invalide.');
+    }
+  };
+  reader.readAsText(file);
+  e.target.value = '';
+});
+
+document.getElementById('metaName').addEventListener('blur', (e) => {
+  data.meta.name = e.target.textContent.trim();
+  if(!data.meta.name) e.target.textContent = 'Cliquer pour éditer';
+  save();
+});
+document.getElementById('metaRole').addEventListener('blur', (e) => {
+  data.meta.role = e.target.textContent.trim();
+  if(!data.meta.role) e.target.textContent = 'Cliquer pour éditer';
+  save();
+});
+[document.getElementById('metaName'), document.getElementById('metaRole')].forEach(el => {
+  el.addEventListener('keydown', e => { if(e.key === 'Enter'){ e.preventDefault(); el.blur(); } });
+});
+
+load();
+</script>
+</body>
+</html>
