@@ -453,44 +453,105 @@ function todayStr(){
   return new Date().toLocaleDateString('fr-CH', {year:'numeric', month:'2-digit', day:'2-digit'});
 }
 
+// Source de vérité unique : ces données sont celles affichées à TOUT LE MONDE
+// qui ouvre cette page (toi, ton employeur, n'importe quel appareil).
+// Pour les mettre à jour : clique "Exporter (JSON)" sur la page après tes
+// modifications, puis remplace ce bloc DEFAULT_DATA par le contenu du fichier
+// exporté, et recommit index.html sur GitHub.
 const DEFAULT_DATA = {
-  meta: { name: '', role: '' },
-  categories: [
+  "meta": {
+    "name": "",
+    "role": "Cliquer pour éditer"
+  },
+  "categories": [
     {
-      id: uid(), name: 'M365', color: 'cyan', icon: 'ti-apps',
-      items: [
-        { id: uid(), text: 'Création utilisateur M365 + boîte mail', level: 3, subs: [] },
-        { id: uid(), text: 'Offboarding', level: 3, subs: [
-            { id: uid(), text: 'Conversion de la boîte mail en shared mailbox' },
-            { id: uid(), text: 'Redirection des mails (si nécessaire)' },
-            { id: uid(), text: 'Désactivation de la licence' },
-            { id: uid(), text: 'Blocage des connexions' }
+      "id": "f14xug4", "name": "Admin M365", "color": "cyan", "icon": "ti-apps",
+      "items": [
+        { "id": "ilxxqmt", "text": "Utilisateurs", "level": 3, "subs": [
+            { "id": "pgi2b9a", "text": "Création de comptes" },
+            { "id": "mdq9zfu", "text": "Reset mot de passe, blocage des connexions" },
+            { "id": "flty92g", "text": "Attribution licence selon usage" },
+            { "id": "srjiafd", "text": "Blocage des connexions, suppression utilisateur" },
+            { "id": "bh25j6i", "text": "Ajout de plusieurs utilisateurs" }
           ]
         },
-        { id: uid(), text: 'Gestion des licences et attribution selon le besoin', level: 3, subs: [] }
+        { "id": "ve0x7o7", "text": "Groupes", "level": 3, "subs": [
+            { "id": "rowospn", "text": "Création de groupes" },
+            { "id": "dle1rmk", "text": "Ajout de membres" }
+          ]
+        },
+        { "id": "47wjagn", "text": "Licences", "level": 2, "subs": [
+            { "id": "d34rabm", "text": "Gestion et commande des licences" }
+          ]
+        },
+        { "id": "0z4cvp4", "text": "Support", "level": 3, "subs": [
+            { "id": "h7jtz7c", "text": "Savoir analyser et débuguer une demande" }
+          ]
+        }
       ]
     },
     {
-      id: uid(), name: 'SharePoint - OneDrive', color: 'amber', icon: 'ti-cloud',
-      items: [
-        { id: uid(), text: 'Débug, problèmes de synchro', level: 3, subs: [] },
-        { id: uid(), text: 'Resynchronisation complète (Windows, Mac)', level: 3, subs: [] },
-        { id: uid(), text: 'Ajout de membres internes et externes', level: 3, subs: [] },
-        { id: uid(), text: 'Documentation OneDrive et SharePoint', level: 2, subs: [] }
+      "id": "gyjwd52", "name": "SharePoint - OneDrive", "color": "amber", "icon": "ti-cloud",
+      "items": [
+        { "id": "qsjt8m2", "text": "Synchronisation SharePoint", "level": 3, "subs": [
+            { "id": "jnwqe2o", "text": "Sync device" },
+            { "id": "wmgzo1n", "text": "Analyses soucis de synchro" }
+          ]
+        },
+        { "id": "z8qzq2f", "text": "Resynchronisation complète (Windows, Mac)", "level": 3, "subs": [] },
+        { "id": "uknwqxn", "text": "Ajout de membres internes et externes", "level": 3, "subs": [] },
+        { "id": "pv1wohc", "text": "Mise en place de documentations", "level": 3, "subs": [
+            { "id": "ql6hjz1", "text": "Procédure OneDrive et Sharepoint" }
+          ]
+        }
       ]
     },
     {
-      id: uid(), name: 'Exchange', color: 'violet', icon: 'ti-mail',
-      items: [
-        { id: uid(), text: 'Conversion Shared mailbox → User mailbox', level: 3, subs: [] }
+      "id": "2h9d6ha", "name": "Exchange", "color": "violet", "icon": "ti-mail",
+      "items": [
+        { "id": "lblqftd", "text": "Boîtes mails", "level": 3, "subs": [
+            { "id": "2xljtfl", "text": "Gestion des boites mails" },
+            { "id": "psh161f", "text": "Conversion boite mail" },
+            { "id": "uee01ok", "text": "Redirection mails" },
+            { "id": "0xn23tv", "text": "Ajout auto-reply" }
+          ]
+        },
+        { "id": "62dumxa", "text": "Mailflow", "level": 2, "subs": [
+            { "id": "4izxgh8", "text": "Filtrage et analyses mails" },
+            { "id": "a3m4ovz", "text": "Création et modification de règles" }
+          ]
+        }
       ]
     },
     {
-      id: uid(), name: 'Entra ID', color: 'rose', icon: 'ti-shield-lock',
-      items: [
-        { id: uid(), text: 'Reset mot de passe, blocage des sessions', level: 3, subs: [] },
-        { id: uid(), text: 'Accès conditionnel (MFA)', level: 2, subs: [] },
-        { id: uid(), text: 'Reset appareils MFA', level: 3, subs: [] }
+      "id": "jzcryme", "name": "Entra ID", "color": "rose", "icon": "ti-shield-lock",
+      "items": [
+        { "id": "iqeer5z", "text": "Utilisateurs", "level": 3, "subs": [
+            { "id": "4i5sdn0", "text": "Reset mdp, blocage des sessions, reset MFA" },
+            { "id": "5d24gxk", "text": "Gestion des groupes" },
+            { "id": "rwth7zc", "text": "MFA" },
+            { "id": "5vuhra1", "text": "Gestion des devices" }
+          ]
+        },
+        { "id": "lgyylmp", "text": "Accès conditionnel", "level": 2, "subs": [
+            { "id": "ddhvczr", "text": "Bypass MFA" }
+          ]
+        },
+        { "id": "0g1v9xe", "text": "Reset appareils MFA", "level": 3, "subs": [] },
+        { "id": "ew9cl7b", "text": "Azure AD Connect", "level": 2, "subs": [
+            { "id": "2a970hz", "text": "Configuration et synchronisation" }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "vg7nqbs", "name": "Intune", "color": "cyan", "icon": "ti-folder",
+      "items": [
+        { "id": "9ebkdpu", "text": "Devices", "level": 3, "subs": [
+            { "id": "cev5i5h", "text": "Déploiement applications" },
+            { "id": "w77pakq", "text": "Checks installations" }
+          ]
+        }
       ]
     }
   ]
@@ -503,31 +564,22 @@ const statCount = document.getElementById('statCount');
 const saveStatus = document.getElementById('saveStatus');
 
 async function load(){
-  try{
-    const raw = localStorage.getItem(STORAGE_KEY);
-    data = raw ? JSON.parse(raw) : structuredClone(DEFAULT_DATA);
-  }catch(e){
-    data = structuredClone(DEFAULT_DATA);
-  }
-  if(!data.meta) data.meta = { name:'', role:'' };
+  // Cette page n'utilise plus de stockage local : elle affiche toujours
+  // les données codées ci-dessus dans DEFAULT_DATA, identiques pour tout
+  // le monde et sur tous les appareils.
+  data = structuredClone(DEFAULT_DATA);
   data.categories.forEach(c => c.items.forEach(i => { if(!i.level) i.level = 2; }));
-  saveStatus.textContent = 'à jour';
+  saveStatus.textContent = 'version publiée';
   render();
-  save(true);
 }
 
 let saveTimer = null;
-function save(silent){
-  if(!silent){ saveStatus.textContent = 'sauvegarde…'; }
-  clearTimeout(saveTimer);
-  saveTimer = setTimeout(() => {
-    try{
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
-      saveStatus.textContent = 'à jour (dans ce navigateur)';
-    }catch(e){
-      saveStatus.textContent = 'erreur de sauvegarde';
-    }
-  }, silent ? 0 : 250);
+function save(){
+  // Les clics (textes, niveaux) ne sont plus qu'un aperçu local, non
+  // permanent : ils ne modifient pas le fichier sur GitHub. Utilise le
+  // bouton "Exporter (JSON)" puis recommit index.html pour rendre un
+  // changement définitif et visible par tous.
+  saveStatus.textContent = 'aperçu non enregistré — exporte puis recommit sur GitHub';
 }
 
 function countAll(){
