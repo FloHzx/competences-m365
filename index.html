@@ -423,6 +423,7 @@
       <div class="toolbar">
         <button class="btn btn-primary" id="addCatBtn">+ nouvelle catégorie</button>
         <button class="btn" id="presentBtn"><i class="ti ti-presentation" aria-hidden="true"></i> mode présentation</button>
+        <button class="btn" id="resetBtn" title="Recharge les données codées dans ce fichier (écrase l'aperçu actuel, pas encore le stockage distant)"><i class="ti ti-refresh-dot" aria-hidden="true"></i> charger la version du fichier</button>
         <button class="btn btn-primary" id="publishBtn"><i class="ti ti-cloud-upload" aria-hidden="true"></i> publier les modifications</button>
         <button class="btn" id="printBtn"><i class="ti ti-printer" aria-hidden="true"></i> exporter en PDF</button>
         <button class="btn" id="exportBtn"><i class="ti ti-download" aria-hidden="true"></i> exporter (JSON)</button>
@@ -1117,6 +1118,14 @@ document.getElementById('presentBtn').addEventListener('click', (e) => {
   e.currentTarget.innerHTML = presentationMode
     ? '<i class="ti ti-edit" aria-hidden="true"></i> mode édition'
     : '<i class="ti ti-presentation" aria-hidden="true"></i> mode présentation';
+});
+
+document.getElementById('resetBtn').addEventListener('click', () => {
+  if(!confirm('Recharger la version codée dans ce fichier ? Ça remplace l\'aperçu actuel (pas encore le stockage partagé — il faudra cliquer "Publier" ensuite pour que les autres appareils la voient).')) return;
+  data = structuredClone(DEFAULT_DATA);
+  data.categories.forEach(c => c.items.forEach(i => { if(!i.level) i.level = 2; }));
+  render();
+  saveStatus.textContent = 'version du fichier chargée — clique "publier" pour la rendre visible partout';
 });
 
 document.getElementById('publishBtn').addEventListener('click', () => publish(false));
