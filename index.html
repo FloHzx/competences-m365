@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Dossier de comp├®tences M365</title>
+<title>Dossier de compétences M365</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -406,41 +406,41 @@
 <body>
 <div class="bg-grid"></div>
 <div class="wrap">
-  <h2 class="sr-only">Dossier de comp├®tences M365 ÔÇö tableau visuel pr├®sentant les comp├®tences acquises par domaine (M365, SharePoint/OneDrive, Exchange, Entra ID), avec niveau de ma├«trise et statistiques globales, destin├® ├á ├¬tre pr├®sent├® ├á un employeur.</h2>
+  <h2 class="sr-only">Dossier de compétences M365 — tableau visuel présentant les compétences acquises par domaine (M365, SharePoint/OneDrive, Exchange, Entra ID), avec niveau de maîtrise et statistiques globales, destiné à être présenté à un employeur.</h2>
 
   <div class="hero">
     <div>
       <p class="eyebrow">~/competences/m365</p>
-      <h1>Dossier de comp├®tences M365</h1>
+      <h1>Dossier de compétences M365</h1>
       <div class="meta-fields">
-        <span class="meta-field"><span class="lbl">Nom :</span><span contenteditable="true" id="metaName">ÔÇö</span></span>
-        <span class="meta-field"><span class="lbl">Fonction :</span><span contenteditable="true" id="metaRole">ÔÇö</span></span>
-        <span class="meta-field"><span class="lbl">Mise ├á jour :</span><span id="metaDate">ÔÇö</span></span>
+        <span class="meta-field"><span class="lbl">Nom :</span><span contenteditable="true" id="metaName">—</span></span>
+        <span class="meta-field"><span class="lbl">Fonction :</span><span contenteditable="true" id="metaRole">—</span></span>
+        <span class="meta-field"><span class="lbl">Mise à jour :</span><span id="metaDate">—</span></span>
       </div>
-      <p class="sub">Suivi des comp├®tences acquises en administration M365, organis├®es par domaine. Chaque point dispose d'un niveau de ma├«trise (cliquer sur les points pour l'ajuster).</p>
+      <p class="sub">Suivi des compétences acquises en administration M365, organisées par domaine. Chaque point dispose d'un niveau de maîtrise (cliquer sur les points pour l'ajuster).</p>
       <div class="toolbar">
-        <button class="btn btn-primary" id="addCatBtn">+ nouvelle cat├®gorie</button>
-        <button class="btn" id="presentBtn"><i class="ti ti-presentation" aria-hidden="true"></i> mode pr├®sentation</button>
+        <button class="btn btn-primary" id="addCatBtn">+ nouvelle catégorie</button>
+        <button class="btn" id="presentBtn"><i class="ti ti-presentation" aria-hidden="true"></i> mode présentation</button>
         <button class="btn btn-primary" id="publishBtn"><i class="ti ti-cloud-upload" aria-hidden="true"></i> publier les modifications</button>
         <button class="btn" id="printBtn"><i class="ti ti-printer" aria-hidden="true"></i> exporter en PDF</button>
         <button class="btn" id="exportBtn"><i class="ti ti-download" aria-hidden="true"></i> exporter (JSON)</button>
         <button class="btn" id="importBtn"><i class="ti ti-upload" aria-hidden="true"></i> importer (JSON)</button>
         <input type="file" id="importFile" accept="application/json" style="display:none;">
-        <span class="stat" id="statCount"><b>ÔÇö</b> comp├®tences</span>
-        <span class="stat" id="saveStatus">chargementÔÇª</span>
+        <span class="stat" id="statCount"><b>—</b> compétences</span>
+        <span class="stat" id="saveStatus">chargement…</span>
       </div>
     </div>
     <div class="gauge-box" id="gaugeBox"></div>
   </div>
 
   <div class="overview" id="overview">
-    <p class="overview-title">R├ëPARTITION PAR DOMAINE</p>
+    <p class="overview-title">RÉPARTITION PAR DOMAINE</p>
     <div id="overviewRows"></div>
   </div>
 
   <div class="grid" id="grid"></div>
 
-  <div class="footnote"><span class="dot"></span> donn├®es personnelles, enregistr├®es pour toi uniquement</div>
+  <div class="footnote"><span class="dot"></span> données personnelles, enregistrées pour toi uniquement</div>
 </div>
 
 <script>
@@ -454,22 +454,22 @@ function todayStr(){
   return new Date().toLocaleDateString('fr-CH', {year:'numeric', month:'2-digit', day:'2-digit'});
 }
 
-// Source de v├®rit├® unique : ces donn├®es sont celles affich├®es ├á TOUT LE MONDE
+// Source de vérité unique : ces données sont celles affichées à TOUT LE MONDE
 // qui ouvre cette page (toi, ton employeur, n'importe quel appareil).
-// Pour les mettre ├á jour : clique "Exporter (JSON)" sur la page apr├¿s tes
+// Pour les mettre à jour : clique "Exporter (JSON)" sur la page après tes
 // modifications, puis remplace ce bloc DEFAULT_DATA par le contenu du fichier
-// export├®, et recommit index.html sur GitHub.
+// exporté, et recommit index.html sur GitHub.
 const DEFAULT_DATA = {
   "meta": {
     "name": "",
-    "role": "Cliquer pour ├®diter"
+    "role": "Cliquer pour éditer"
   },
   "categories": [
     {
       "id": "f14xug4", "name": "Admin M365", "color": "cyan", "icon": "ti-apps",
       "items": [
         { "id": "ilxxqmt", "text": "Utilisateurs", "level": 3, "subs": [
-            { "id": "pgi2b9a", "text": "Cr├®ation de comptes" },
+            { "id": "pgi2b9a", "text": "Création de comptes" },
             { "id": "mdq9zfu", "text": "Reset mot de passe, blocage des connexions" },
             { "id": "flty92g", "text": "Attribution licence selon usage" },
             { "id": "srjiafd", "text": "Blocage des connexions, suppression utilisateur" },
@@ -477,7 +477,7 @@ const DEFAULT_DATA = {
           ]
         },
         { "id": "ve0x7o7", "text": "Groupes", "level": 3, "subs": [
-            { "id": "rowospn", "text": "Cr├®ation de groupes" },
+            { "id": "rowospn", "text": "Création de groupes" },
             { "id": "dle1rmk", "text": "Ajout de membres" }
           ]
         },
@@ -486,7 +486,7 @@ const DEFAULT_DATA = {
           ]
         },
         { "id": "0z4cvp4", "text": "Support", "level": 3, "subs": [
-            { "id": "h7jtz7c", "text": "Savoir analyser et d├®buguer une demande" }
+            { "id": "h7jtz7c", "text": "Savoir analyser et débuguer une demande" }
           ]
         }
       ]
@@ -499,10 +499,10 @@ const DEFAULT_DATA = {
             { "id": "wmgzo1n", "text": "Analyses soucis de synchro" }
           ]
         },
-        { "id": "z8qzq2f", "text": "Resynchronisation compl├¿te (Windows, Mac)", "level": 3, "subs": [] },
+        { "id": "z8qzq2f", "text": "Resynchronisation complète (Windows, Mac)", "level": 3, "subs": [] },
         { "id": "uknwqxn", "text": "Ajout de membres internes et externes", "level": 3, "subs": [] },
         { "id": "pv1wohc", "text": "Mise en place de documentations", "level": 3, "subs": [
-            { "id": "ql6hjz1", "text": "Proc├®dure OneDrive et Sharepoint" }
+            { "id": "ql6hjz1", "text": "Procédure OneDrive et Sharepoint" }
           ]
         }
       ]
@@ -510,7 +510,7 @@ const DEFAULT_DATA = {
     {
       "id": "2h9d6ha", "name": "Exchange", "color": "violet", "icon": "ti-mail",
       "items": [
-        { "id": "lblqftd", "text": "Bo├«tes mails", "level": 3, "subs": [
+        { "id": "lblqftd", "text": "Boîtes mails", "level": 3, "subs": [
             { "id": "2xljtfl", "text": "Gestion des boites mails" },
             { "id": "psh161f", "text": "Conversion boite mail" },
             { "id": "uee01ok", "text": "Redirection mails" },
@@ -519,7 +519,7 @@ const DEFAULT_DATA = {
         },
         { "id": "62dumxa", "text": "Mailflow", "level": 2, "subs": [
             { "id": "4izxgh8", "text": "Filtrage et analyses mails" },
-            { "id": "a3m4ovz", "text": "Cr├®ation et modification de r├¿gles" }
+            { "id": "a3m4ovz", "text": "Création et modification de règles" }
           ]
         }
       ]
@@ -534,7 +534,7 @@ const DEFAULT_DATA = {
             { "id": "5vuhra1", "text": "Gestion des devices" }
           ]
         },
-        { "id": "lgyylmp", "text": "Acc├¿s conditionnel", "level": 2, "subs": [
+        { "id": "lgyylmp", "text": "Accès conditionnel", "level": 2, "subs": [
             { "id": "ddhvczr", "text": "Bypass MFA" }
           ]
         },
@@ -549,7 +549,7 @@ const DEFAULT_DATA = {
       "id": "vg7nqbs", "name": "Intune", "color": "cyan", "icon": "ti-folder",
       "items": [
         { "id": "9ebkdpu", "text": "Devices", "level": 3, "subs": [
-            { "id": "cev5i5h", "text": "D├®ploiement applications" },
+            { "id": "cev5i5h", "text": "Déploiement applications" },
             { "id": "w77pakq", "text": "Checks installations" }
           ]
         }
@@ -558,8 +558,8 @@ const DEFAULT_DATA = {
   ]
 };
 
-// Stockage partag├® via JSONBin.io ÔÇö la m├¬me adresse est lue par tous les
-// appareils qui ouvrent cette page. La cl├® ci-dessous est visible dans le
+// Stockage partagé via JSONBin.io — la même adresse est lue par tous les
+// appareils qui ouvrent cette page. La clé ci-dessous est visible dans le
 // code source : n'y mets rien de sensible, et sache que quiconque lit le
 // code source pourrait techniquement aussi publier des changements.
 const JSONBIN_ID = '6a4a8177f5f4af5e2962ddfa';
@@ -573,7 +573,7 @@ const statCount = document.getElementById('statCount');
 const saveStatus = document.getElementById('saveStatus');
 
 async function load(){
-  saveStatus.textContent = 'chargementÔÇª';
+  saveStatus.textContent = 'chargement…';
   try{
     const res = await fetch(JSONBIN_URL + '/latest', {
       headers: { 'X-Master-Key': JSONBIN_KEY }
@@ -581,17 +581,17 @@ async function load(){
     const json = await res.json();
     if(json.record && json.record.categories){
       data = json.record;
-      saveStatus.textContent = 'synchronis├®';
+      saveStatus.textContent = 'synchronisé';
     }else{
-      // Bin vide ou placeholder : on l'initialise avec les donn├®es de base.
+      // Bin vide ou placeholder : on l'initialise avec les données de base.
       data = structuredClone(DEFAULT_DATA);
       await publish(true);
     }
   }catch(e){
-    // Pas de r├®seau ou service indisponible : on retombe sur la derni├¿re
-    // version connue cod├®e dans le fichier, pour que la page reste utilisable.
+    // Pas de réseau ou service indisponible : on retombe sur la dernière
+    // version connue codée dans le fichier, pour que la page reste utilisable.
     data = structuredClone(DEFAULT_DATA);
-    saveStatus.textContent = 'hors ligne ÔÇö version de secours affich├®e';
+    saveStatus.textContent = 'hors ligne — version de secours affichée';
   }
   if(!data.meta) data.meta = { name:'', role:'' };
   data.categories.forEach(c => c.items.forEach(i => { if(!i.level) i.level = 2; }));
@@ -599,24 +599,24 @@ async function load(){
 }
 
 function save(){
-  // Un clic (texte, niveau) modifie seulement la copie en m├®moire du
+  // Un clic (texte, niveau) modifie seulement la copie en mémoire du
   // navigateur actuel. Il faut cliquer "Publier les modifications" pour
-  // que ce soit envoy├® au stockage partag├® et visible par les autres
-  // appareils apr├¿s un rechargement de page.
-  saveStatus.textContent = 'modifi├® ÔÇö clique "publier les modifications" pour le rendre visible partout';
+  // que ce soit envoyé au stockage partagé et visible par les autres
+  // appareils après un rechargement de page.
+  saveStatus.textContent = 'modifié — clique "publier les modifications" pour le rendre visible partout';
 }
 
 async function publish(silent){
-  if(!silent){ saveStatus.textContent = 'publicationÔÇª'; }
+  if(!silent){ saveStatus.textContent = 'publication…'; }
   try{
     await fetch(JSONBIN_URL, {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json', 'X-Master-Key': JSONBIN_KEY },
       body: JSON.stringify(data)
     });
-    saveStatus.textContent = 'publi├® ÔÇö visible sur tous les appareils apr├¿s rechargement';
+    saveStatus.textContent = 'publié — visible sur tous les appareils après rechargement';
   }catch(e){
-    saveStatus.textContent = 'erreur de publication ÔÇö r├®essaie';
+    saveStatus.textContent = 'erreur de publication — réessaie';
   }
 }
 
@@ -646,7 +646,7 @@ function renderGauge(){
         transform="rotate(-90 70 70)" style="transition: stroke-dashoffset 0.6s ease;"/>
       <text x="70" y="76" text-anchor="middle" class="gauge-pct">${pct}%</text>
     </svg>
-    <span class="gauge-label">NIVEAU GLOBAL<br>DE MA├ÄTRISE</span>
+    <span class="gauge-label">NIVEAU GLOBAL<br>DE MAÎTRISE</span>
   `;
 }
 
@@ -684,7 +684,7 @@ function renderOverview(){
 
     const value = document.createElement('span');
     value.className = 'ov-value';
-    value.textContent = n + ' pts ┬À ' + mastered + ' autonome' + (mastered===1?'':'s');
+    value.textContent = n + ' pts · ' + mastered + ' autonome' + (mastered===1?'':'s');
 
     row.appendChild(icon);
     row.appendChild(label);
@@ -702,9 +702,9 @@ function render(){
 
   const addCard = document.createElement('button');
   addCard.className = 'new-cat-card';
-  addCard.innerHTML = '<i class="ti" aria-hidden="true">+</i> ajouter une cat├®gorie';
+  addCard.innerHTML = '<i class="ti" aria-hidden="true">+</i> ajouter une catégorie';
   addCard.onclick = () => {
-    const name = prompt('Nom de la nouvelle cat├®gorie :');
+    const name = prompt('Nom de la nouvelle catégorie :');
     if(!name || !name.trim()) return;
     const usedColors = data.categories.map(c => c.color);
     const color = COLORS.find(c => !usedColors.includes(c)) || COLORS[data.categories.length % COLORS.length];
@@ -713,10 +713,10 @@ function render(){
   };
   grid.appendChild(addCard);
 
-  statCount.innerHTML = '<b>' + countAll() + '</b> comp├®tences';
+  statCount.innerHTML = '<b>' + countAll() + '</b> compétences';
 
-  document.getElementById('metaName').textContent = data.meta.name || 'Cliquer pour ├®diter';
-  document.getElementById('metaRole').textContent = data.meta.role || 'Cliquer pour ├®diter';
+  document.getElementById('metaName').textContent = data.meta.name || 'Cliquer pour éditer';
+  document.getElementById('metaRole').textContent = data.meta.role || 'Cliquer pour éditer';
   document.getElementById('metaDate').textContent = todayStr();
 }
 
@@ -758,10 +758,10 @@ function renderCategory(cat){
   const delCat = document.createElement('button');
   delCat.className = 'icon-btn';
   delCat.innerHTML = '&times;';
-  delCat.title = 'Supprimer la cat├®gorie';
+  delCat.title = 'Supprimer la catégorie';
   delCat.style.opacity = '0.6';
   delCat.onclick = () => {
-    if(confirm('Supprimer la cat├®gorie "' + cat.name + '" et tout son contenu ?')){
+    if(confirm('Supprimer la catégorie "' + cat.name + '" et tout son contenu ?')){
       data.categories = data.categories.filter(c => c.id !== cat.id);
       save(); render();
     }
@@ -779,7 +779,7 @@ function renderCategory(cat){
   if(cat.items.length === 0){
     const empty = document.createElement('div');
     empty.className = 'empty';
-    empty.textContent = '// aucune comp├®tence pour le moment';
+    empty.textContent = '// aucune compétence pour le moment';
     body.appendChild(empty);
   }
 
@@ -793,7 +793,7 @@ function renderCategory(cat){
   const form = document.createElement('div');
   form.className = 'add-item-form';
   const input = document.createElement('input');
-  input.placeholder = 'nouvelle comp├®tenceÔÇª';
+  input.placeholder = 'nouvelle compétence…';
   const btn = document.createElement('button');
   btn.textContent = '+';
   const addFn = () => {
@@ -821,7 +821,7 @@ function renderLevelDots(cat, item){
     const dot = document.createElement('button');
     dot.className = 'level-dot' + ((item.level||2) >= lvl ? ' filled' : '');
     dot.style.color = COLOR_HEX[cat.color];
-    dot.setAttribute('aria-label', 'Niveau ' + lvl + ' ÔÇö ' + LEVEL_LABELS[lvl]);
+    dot.setAttribute('aria-label', 'Niveau ' + lvl + ' — ' + LEVEL_LABELS[lvl]);
     dot.onclick = (e) => {
       e.stopPropagation();
       item.level = lvl;
@@ -841,7 +841,7 @@ function renderItem(cat, item, isLast){
 
   const node = document.createElement('span');
   node.className = 'node';
-  node.textContent = isLast ? 'ÔööÔöÇ' : 'Ôö£ÔöÇ';
+  node.textContent = isLast ? '└─' : '├─';
 
   const text = document.createElement('span');
   text.className = 'row-text';
@@ -908,7 +908,7 @@ function renderSub(cat, item, sub, isLast, parentIsLast){
 
   const node = document.createElement('span');
   node.className = 'node';
-  node.textContent = (parentIsLast ? '   ' : 'Ôöé  ') + (isLast ? 'ÔööÔöÇ' : 'Ôö£ÔöÇ');
+  node.textContent = (parentIsLast ? '   ' : '│  ') + (isLast ? '└─' : '├─');
 
   const text = document.createElement('span');
   text.className = 'row-text';
@@ -941,7 +941,7 @@ function renderSub(cat, item, sub, isLast, parentIsLast){
 }
 
 document.getElementById('addCatBtn').onclick = () => {
-  const name = prompt('Nom de la nouvelle cat├®gorie :');
+  const name = prompt('Nom de la nouvelle catégorie :');
   if(!name || !name.trim()) return;
   const usedColors = data.categories.map(c => c.color);
   const color = COLORS.find(c => !usedColors.includes(c)) || COLORS[data.categories.length % COLORS.length];
@@ -954,8 +954,8 @@ document.getElementById('presentBtn').addEventListener('click', (e) => {
   document.body.classList.toggle('presentation', presentationMode);
   e.currentTarget.classList.toggle('active', presentationMode);
   e.currentTarget.innerHTML = presentationMode
-    ? '<i class="ti ti-edit" aria-hidden="true"></i> mode ├®dition'
-    : '<i class="ti ti-presentation" aria-hidden="true"></i> mode pr├®sentation';
+    ? '<i class="ti ti-edit" aria-hidden="true"></i> mode édition'
+    : '<i class="ti ti-presentation" aria-hidden="true"></i> mode présentation';
 });
 
 document.getElementById('publishBtn').addEventListener('click', () => publish(false));
@@ -997,12 +997,12 @@ document.getElementById('importFile').addEventListener('change', (e) => {
 
 document.getElementById('metaName').addEventListener('blur', (e) => {
   data.meta.name = e.target.textContent.trim();
-  if(!data.meta.name) e.target.textContent = 'Cliquer pour ├®diter';
+  if(!data.meta.name) e.target.textContent = 'Cliquer pour éditer';
   save();
 });
 document.getElementById('metaRole').addEventListener('blur', (e) => {
   data.meta.role = e.target.textContent.trim();
-  if(!data.meta.role) e.target.textContent = 'Cliquer pour ├®diter';
+  if(!data.meta.role) e.target.textContent = 'Cliquer pour éditer';
   save();
 });
 [document.getElementById('metaName'), document.getElementById('metaRole')].forEach(el => {
