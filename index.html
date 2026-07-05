@@ -22,6 +22,7 @@
     --amber: #e0a458;
     --violet: #a389e8;
     --rose: #e08497;
+    --green: #86c19a;
     --danger: #e0687a;
   }
   *{box-sizing:border-box;}
@@ -292,6 +293,7 @@
     opacity:0;
   }
   .item-block:hover .add-sub-btn{opacity:0.7;}
+  li:hover > .add-sub-btn{opacity:0.7;}
   .add-sub-btn:hover{color:var(--cyan);opacity:1 !important;}
   .add-item-form{
     display:flex;gap:6px;margin-top:8px;
@@ -417,7 +419,7 @@
         <span class="meta-field"><span class="lbl">Fonction :</span><span contenteditable="true" id="metaRole">—</span></span>
         <span class="meta-field"><span class="lbl">Mise à jour :</span><span id="metaDate">—</span></span>
       </div>
-      <p class="sub">Suivi des compétences acquises en administration M365, organisées par domaine. Chaque point dispose d'un niveau de maîtrise (cliquer sur les points pour l'ajuster).</p>
+      <p class="sub">Suivi des compétences acquises en administration M365, organisées par domaine, durant mes 3 mois de période d'essai — au regard de ce qui était attendu pour le poste. Chaque point dispose d'un niveau de maîtrise (cliquer sur les points pour l'ajuster).</p>
       <div class="toolbar">
         <button class="btn btn-primary" id="addCatBtn">+ nouvelle catégorie</button>
         <button class="btn" id="presentBtn"><i class="ti ti-presentation" aria-hidden="true"></i> mode présentation</button>
@@ -445,8 +447,8 @@
 
 <script>
 const STORAGE_KEY = 'm365-skills-board';
-const COLORS = ['cyan','amber','violet','rose'];
-const COLOR_HEX = {cyan:'#4fd1c5', amber:'#e0a458', violet:'#a389e8', rose:'#e08497'};
+const COLORS = ['cyan','amber','violet','rose','green'];
+const COLOR_HEX = {cyan:'#4fd1c5', amber:'#e0a458', violet:'#a389e8', rose:'#e08497', green:'#86c19a'};
 const LEVEL_LABELS = {1:'Notion', 2:'En pratique', 3:'Autonome'};
 
 function uid(){ return Math.random().toString(36).slice(2,9); }
@@ -469,24 +471,49 @@ const DEFAULT_DATA = {
       "id": "f14xug4", "name": "Admin M365", "color": "cyan", "icon": "ti-apps",
       "items": [
         { "id": "ilxxqmt", "text": "Utilisateurs", "level": 3, "subs": [
-            { "id": "pgi2b9a", "text": "Création de comptes" },
+            { "id": "pgi2b9a", "text": "Création de comptes", "subs": [
+                { "id": "pg001", "text": "Via le portail admin M365" },
+                { "id": "pg002", "text": "Attribution de licence dès la création" }
+              ]
+            },
             { "id": "mdq9zfu", "text": "Reset mot de passe, blocage des connexions" },
             { "id": "flty92g", "text": "Attribution licence selon usage" },
             { "id": "srjiafd", "text": "Blocage des connexions, suppression utilisateur" },
-            { "id": "bh25j6i", "text": "Ajout de plusieurs utilisateurs" }
+            { "id": "bh25j6i", "text": "Ajout de plusieurs utilisateurs", "subs": [
+                { "id": "bh001", "text": "Import en masse via CSV" }
+              ]
+            }
+          ]
+        },
+        { "id": "onb001", "text": "Onboarding / Offboarding", "level": 2, "subs": [
+            { "id": "onb002", "text": "Création complète (compte, boîte mail, licence, groupes)" },
+            { "id": "onb003", "text": "Conversion en shared mailbox et désactivation au départ" }
           ]
         },
         { "id": "ve0x7o7", "text": "Groupes", "level": 3, "subs": [
-            { "id": "rowospn", "text": "Création de groupes" },
+            { "id": "rowospn", "text": "Création de groupes", "subs": [
+                { "id": "ro001", "text": "Groupes de sécurité vs groupes M365" }
+              ]
+            },
             { "id": "dle1rmk", "text": "Ajout de membres" }
           ]
         },
         { "id": "47wjagn", "text": "Licences", "level": 2, "subs": [
-            { "id": "d34rabm", "text": "Gestion et commande des licences" }
+            { "id": "d34rabm", "text": "Gestion et commande des licences", "subs": [
+                { "id": "d3001", "text": "Suivi des licences disponibles/attribuées" }
+              ]
+            }
+          ]
+        },
+        { "id": "role001", "text": "Rôles d'administration", "level": 2, "subs": [
+            { "id": "role002", "text": "Attribution des rôles selon le principe du moindre privilège" }
           ]
         },
         { "id": "0z4cvp4", "text": "Support", "level": 3, "subs": [
-            { "id": "h7jtz7c", "text": "Savoir analyser et débuguer une demande" }
+            { "id": "h7jtz7c", "text": "Savoir analyser et débuguer une demande", "subs": [
+                { "id": "h7001", "text": "Consultation du Message center / Service health" }
+              ]
+            }
           ]
         }
       ]
@@ -496,13 +523,30 @@ const DEFAULT_DATA = {
       "items": [
         { "id": "qsjt8m2", "text": "Synchronisation SharePoint", "level": 3, "subs": [
             { "id": "jnwqe2o", "text": "Sync device" },
-            { "id": "wmgzo1n", "text": "Analyses soucis de synchro" }
+            { "id": "wmgzo1n", "text": "Analyses soucis de synchro", "subs": [
+                { "id": "wm001", "text": "Lecture des logs OneDrive" }
+              ]
+            }
           ]
         },
         { "id": "z8qzq2f", "text": "Resynchronisation complète (Windows, Mac)", "level": 3, "subs": [] },
-        { "id": "uknwqxn", "text": "Ajout de membres internes et externes", "level": 3, "subs": [] },
+        { "id": "uknwqxn", "text": "Ajout de membres internes et externes", "level": 3, "subs": [
+            { "id": "uk001", "text": "Partage externe sécurisé" }
+          ]
+        },
+        { "id": "site001", "text": "Gestion des sites SharePoint", "level": 2, "subs": [
+            { "id": "site002", "text": "Création de sites et gestion des permissions" }
+          ]
+        },
+        { "id": "ret001", "text": "Rétention et restauration", "level": 2, "subs": [
+            { "id": "ret002", "text": "Restauration de fichiers et versions précédentes" }
+          ]
+        },
         { "id": "pv1wohc", "text": "Mise en place de documentations", "level": 3, "subs": [
-            { "id": "ql6hjz1", "text": "Procédure OneDrive et Sharepoint" }
+            { "id": "ql6hjz1", "text": "Procédure OneDrive et Sharepoint", "subs": [
+                { "id": "ql001", "text": "Guides destinés aux utilisateurs internes" }
+              ]
+            }
           ]
         }
       ]
@@ -512,14 +556,32 @@ const DEFAULT_DATA = {
       "items": [
         { "id": "lblqftd", "text": "Boîtes mails", "level": 3, "subs": [
             { "id": "2xljtfl", "text": "Gestion des boites mails" },
-            { "id": "psh161f", "text": "Conversion boite mail" },
+            { "id": "psh161f", "text": "Conversion boite mail", "subs": [
+                { "id": "ps001", "text": "Shared mailbox ↔ User mailbox" }
+              ]
+            },
             { "id": "uee01ok", "text": "Redirection mails" },
             { "id": "0xn23tv", "text": "Ajout auto-reply" }
           ]
         },
+        { "id": "dl001", "text": "Listes de diffusion", "level": 2, "subs": [
+            { "id": "dl002", "text": "Création et gestion des groupes de distribution" }
+          ]
+        },
+        { "id": "sec001", "text": "Sécurité des mails", "level": 2, "subs": [
+            { "id": "sec002", "text": "Gestion de la quarantaine anti-spam / anti-phishing" }
+          ]
+        },
+        { "id": "del001", "text": "Délégation de boîtes mail", "level": 2, "subs": [
+            { "id": "del002", "text": "Permissions \"Envoyer en tant que\" / \"Envoyer de la part de\"" }
+          ]
+        },
         { "id": "62dumxa", "text": "Mailflow", "level": 2, "subs": [
             { "id": "4izxgh8", "text": "Filtrage et analyses mails" },
-            { "id": "a3m4ovz", "text": "Création et modification de règles" }
+            { "id": "a3m4ovz", "text": "Création et modification de règles", "subs": [
+                { "id": "a3001", "text": "Règles de transport basiques" }
+              ]
+            }
           ]
         }
       ]
@@ -530,27 +592,62 @@ const DEFAULT_DATA = {
         { "id": "iqeer5z", "text": "Utilisateurs", "level": 3, "subs": [
             { "id": "4i5sdn0", "text": "Reset mdp, blocage des sessions, reset MFA" },
             { "id": "5d24gxk", "text": "Gestion des groupes" },
-            { "id": "rwth7zc", "text": "MFA" },
+            { "id": "rwth7zc", "text": "MFA", "subs": [
+                { "id": "rw001", "text": "Activation / désactivation par utilisateur" }
+              ]
+            },
             { "id": "5vuhra1", "text": "Gestion des devices" }
           ]
         },
+        { "id": "erole001", "text": "Rôles administratifs Entra ID", "level": 2, "subs": [
+            { "id": "erole002", "text": "Attribution de rôles (Helpdesk, Global admin, etc.)" }
+          ]
+        },
+        { "id": "app001", "text": "Applications d'entreprise", "level": 1, "subs": [
+            { "id": "app002", "text": "Gestion du SSO et des accès applicatifs" }
+          ]
+        },
         { "id": "lgyylmp", "text": "Accès conditionnel", "level": 2, "subs": [
-            { "id": "ddhvczr", "text": "Bypass MFA" }
+            { "id": "ddhvczr", "text": "Bypass MFA", "subs": [
+                { "id": "dd001", "text": "Cas d'exception ponctuels" }
+              ]
+            }
           ]
         },
         { "id": "0g1v9xe", "text": "Reset appareils MFA", "level": 3, "subs": [] },
         { "id": "ew9cl7b", "text": "Azure AD Connect", "level": 2, "subs": [
-            { "id": "2a970hz", "text": "Configuration et synchronisation" }
+            { "id": "2a970hz", "text": "Configuration et synchronisation", "subs": [
+                { "id": "2a001", "text": "Suivi des cycles de synchro" }
+              ]
+            }
           ]
         }
       ]
     },
     {
-      "id": "vg7nqbs", "name": "Intune", "color": "cyan", "icon": "ti-folder",
+      "id": "vg7nqbs", "name": "Intune", "color": "green", "icon": "ti-folder",
       "items": [
         { "id": "9ebkdpu", "text": "Devices", "level": 3, "subs": [
-            { "id": "cev5i5h", "text": "Déploiement applications" },
-            { "id": "w77pakq", "text": "Checks installations" }
+            { "id": "cev5i5h", "text": "Déploiement applications", "subs": [
+                { "id": "ce001", "text": "Attribution par groupe d'appareils" }
+              ]
+            },
+            { "id": "w77pakq", "text": "Checks installations", "subs": [
+                { "id": "w7001", "text": "Vérification du statut de conformité" }
+              ]
+            }
+          ]
+        },
+        { "id": "prof001", "text": "Profils de configuration", "level": 2, "subs": [
+            { "id": "prof002", "text": "Wi-Fi, VPN, restrictions" }
+          ]
+        },
+        { "id": "conf001", "text": "Politiques de conformité", "level": 2, "subs": [
+            { "id": "conf002", "text": "Suivi de la conformité des appareils" }
+          ]
+        },
+        { "id": "inv001", "text": "Inventaire du parc", "level": 2, "subs": [
+            { "id": "inv002", "text": "Suivi des appareils gérés" }
           ]
         }
       ]
@@ -933,6 +1030,70 @@ function renderSub(cat, item, sub, isLast, parentIsLast){
     save(); render();
   };
 
+  const addBtn = document.createElement('button');
+  addBtn.className = 'icon-btn';
+  addBtn.innerHTML = '&#43;';
+  addBtn.title = 'Ajouter une précision';
+  addBtn.onclick = () => {
+    const v = prompt('Précision pour "' + sub.text + '" :');
+    if(!v || !v.trim()) return;
+    if(!sub.subs) sub.subs = [];
+    sub.subs.push({ id: uid(), text: v.trim() });
+    save(); render();
+  };
+
+  row.appendChild(node);
+  row.appendChild(text);
+  row.appendChild(addBtn);
+  row.appendChild(delBtn);
+  li.appendChild(row);
+
+  if(sub.subs && sub.subs.length){
+    const ssUl = document.createElement('ul');
+    ssUl.className = 'subs';
+    sub.subs.forEach((ss, ssidx) => {
+      ssUl.appendChild(renderSubSub(cat, sub, ss, ssidx === sub.subs.length - 1));
+    });
+    li.appendChild(ssUl);
+  }
+
+  return li;
+}
+
+function renderSubSub(cat, sub, ss, isLast){
+  const li = document.createElement('li');
+  const row = document.createElement('div');
+  row.className = 'row';
+  row.style.paddingLeft = '28px';
+
+  const node = document.createElement('span');
+  node.className = 'node';
+  node.style.opacity = '0.7';
+  node.textContent = isLast ? '└─' : '├─';
+
+  const text = document.createElement('span');
+  text.className = 'row-text';
+  text.contentEditable = 'true';
+  text.textContent = ss.text;
+  text.style.color = 'var(--text-faint)';
+  text.style.fontSize = '12.5px';
+  text.addEventListener('blur', () => {
+    const v = text.textContent.trim();
+    ss.text = v || ss.text;
+    text.textContent = ss.text;
+    save();
+  });
+  text.addEventListener('keydown', e => { if(e.key === 'Enter'){ e.preventDefault(); text.blur(); } });
+
+  const delBtn = document.createElement('button');
+  delBtn.className = 'icon-btn';
+  delBtn.innerHTML = '&times;';
+  delBtn.title = 'Supprimer';
+  delBtn.onclick = () => {
+    sub.subs = sub.subs.filter(s => s.id !== ss.id);
+    save(); render();
+  };
+
   row.appendChild(node);
   row.appendChild(text);
   row.appendChild(delBtn);
@@ -1012,4 +1173,4 @@ document.getElementById('metaRole').addEventListener('blur', (e) => {
 load();
 </script>
 </body>
-</html> 
+</html>
